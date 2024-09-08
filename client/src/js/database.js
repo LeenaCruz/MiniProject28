@@ -9,6 +9,8 @@ const initdb = async () => {
                 console.log('contact-db database already exists');
                 return;
             }
+            db.createObjectStore('contact-db', {keyPath: 'id', autoIncrement: true});
+            console.log('contact-db database created')
         }
     })
 };
@@ -28,7 +30,7 @@ export const postDb = async (name, home, cell, email) => {
 // TODO: Complete the getDb() function below:
 export const getDb = async () => {
 console.log('GET all from the database');
-const contactDb = await openDB('contact-db',1);
+const contactDb = await openDB('contact-db',1); 
 const tx = contactDb.transaction('contact-db', 'readonly');
     const store = tx.objectStore('contact-db');
     const request = store.getAll();
@@ -40,9 +42,9 @@ const tx = contactDb.transaction('contact-db', 'readonly');
 // TODO: Complete the deleteDb() function below:
 export const deleteDb = async (id) => {
     console.log('DELETE from the database', id);
-    const contactDb = await openDB('todos', 1);
-    const tx = contactDb.transaction('todos', 'readwrite');
-    const store = tx.objectStore('todos');
+    const contactDb = await openDB('contact-db', 1);
+    const tx = contactDb.transaction('contact-db', 'readwrite');
+    const store = tx.objectStore('contact-db');
     const request = store.delete(id);
     const result = await request;
     console.log('result.value', result);
